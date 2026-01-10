@@ -1,0 +1,33 @@
+{% extends 'customers/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Account List</h2>
+    <a href="{% url 'account_create' %}" class="btn btn-primary mb-4">Create Account</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Account Number</th>
+                <th>Customer</th>
+                <th>Account Type</th>
+                <th>Balance</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for account in accounts %}
+            <tr>
+                <td>{{ account.account_number }}</td>
+                <td>{{ account.customer }}</td>
+                <td>{{ account.get_account_type_display }}</td>
+                <td>{{ account.balance }}</td>
+                <td>
+                    <a href="{% url 'account_update' account.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'account_delete' account.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

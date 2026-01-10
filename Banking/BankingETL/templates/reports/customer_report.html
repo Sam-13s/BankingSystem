@@ -1,0 +1,94 @@
+{% extends 'customers/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Customer Report</h2>
+    <a href="{% url 'download_customer_report_csv' %}" class="btn btn-success float-end mb-3">Download CSV</a>
+    <a href="{% url 'download_customer_report_excel' %}" class="btn btn-outline-success">Download Excel</a>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Customer Balances Chart</h3>
+            <canvas id="customerChart" width="400" height="200"></canvas>
+        </div>
+        <div class="col-md-6">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Branch</th>
+                        <th>Account Number</th>
+                        <th>Balance</th>
+                        <th>Card Number</th>
+                        <th>Card Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customer in customers %}
+                        {% for account in customer.accounts.all %}
+                            <tr>
+                                <td>{{ customer.first_name }} {{ customer.last_name }}</td>
+                                <td>{{ customer.branch.name }}</td>
+                                <td>{{ account.account_number }}</td>
+                                <td>{{ account.balance }}</td>
+                                {% if account.card %}
+                                    <td>{{ account.card.card_number }}</td>
+                                    <td>{{ account.card.get_card_type_display }}</td>
+                                {% else %}
+                                    <td colspan="2">No Card Issued</td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    {% empty %}
+                        <tr><td colspan="6">No customers found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let customerChart;
+
+function updateChart() {
+    fetch('{% url "customer_chart_data" %}')
+        .then(response => response.json())
+        .then(data => {
+            if (customerChart) {
+                customerChart.data.labels = data.labels;
+                customerChart.data.datasets[0].data = data.data;
+                customerChart.update();
+            } else {
+                const ctx = document.getElementById('customerChart').getContext('2d');
+                customerChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'Total Balance',
+                            data: data.data,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        });
+}
+
+// Initial load
+updateChart();
+
+// Update every 5 seconds
+setInterval(updateChart, 5000);
+</script>
+{% endblock %}

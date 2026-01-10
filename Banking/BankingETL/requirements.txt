@@ -1,0 +1,9 @@
+Django==4.2.20
+reportlab
+sqllite3
+pandas==2.2.2
+numpy==1.26.4
+Pillow==10.4.0
+
+
+

@@ -1,0 +1,41 @@
+{% extends 'customers/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Branch List</h2>
+    <a href="{% url 'branch_create' %}" class="btn btn-primary mb-3">Add Branch</a>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Contact Number</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for branch in branches %}
+            <tr>
+                <td>{{ branch.name }}</td>
+                <td>{{ branch.address }}</td>
+                <td>{{ branch.city }}</td>
+                <td>{{ branch.contact_number }}</td>
+                <td>
+                    <a href="{% url 'branch_update' branch.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">No branches available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

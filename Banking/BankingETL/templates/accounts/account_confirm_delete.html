@@ -1,0 +1,13 @@
+{% extends 'customers/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Delete Account</h2>
+    <form method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete the account: <strong>{{ account.account_number }}</strong>?</p>
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a href="{% url 'account_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

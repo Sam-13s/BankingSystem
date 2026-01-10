@@ -1,0 +1,296 @@
+{% extends 'customers/base.html' %}
+
+{% block back_button %}{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    .dashboard-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .header {
+        text-align: center;
+        color: white;
+        margin-bottom: 30px;
+    }
+    .header h1 {
+        font-size: 3em;
+        margin: 0;
+        color: #764ba2 ;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+    .stat-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 25px;
+        text-align: center;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        transition: transform 0.3s ease;
+    }
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+    .stat-card h3 {
+        margin: 0 0 10px 0;
+        color: #667eea;
+        font-size: 1.2em;
+    }
+    .stat-card .number {
+        font-size: 2.5em;
+        font-weight: bold;
+        color: #764ba2;
+        margin: 0;
+    }
+    .links-section {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+    .links-section h2 {
+        color: #667eea;
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 2em;
+    }
+    .links-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+    .link-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-decoration: none;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .link-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    .link-card h3 {
+        margin: 0;
+        font-size: 1.1em;
+    }
+    .recent-transactions {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 30px;
+        margin-top: 30px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+    .recent-transactions h2 {
+        color: #667eea;
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 2em;
+    }
+    .transaction-list {
+        list-style: none;
+        padding: 0;
+    }
+    .transaction-item {
+        background: #f8f9fa;
+        margin-bottom: 10px;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+    }
+    .transaction-item:hover {
+        background: #e9ecef;
+    }
+    .customize-section {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+    .customize-section h2 {
+        color: #667eea;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    .toggle-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    .toggle-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .toggle-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .toggle-btn.active {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    }
+    .welcome-message {
+        text-align: center;
+        color: white;
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+    .hidden {
+        display: none !important;
+    }
+</style>
+<div class="dashboard-container">
+    <div class="welcome-message">
+        Welcome to the Banking Management System! Here's your overview.
+    </div>
+    <div class="header">
+        <h1>🏦 Banking Management Dashboard</h1>
+    </div>
+
+    <div class="customize-section">
+        <h2>Customize Your Dashboard</h2>
+        <div class="toggle-buttons">
+            <button class="toggle-btn active" onclick="toggleSection('stats-section')">Show Stats</button>
+            <button class="toggle-btn active" onclick="toggleSection('links-section')">Show Links</button>
+            <button class="toggle-btn active" onclick="toggleSection('transactions-section')">Show Transactions</button>
+        </div>
+    </div>
+
+    <div class="stats-grid" id="stats-section">
+        <div class="stat-card">
+            <h3>Total Customers</h3>
+            <p class="number">{{ total_customers }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total Accounts</h3>
+            <p class="number">{{ total_accounts }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total Transactions</h3>
+            <p class="number">{{ total_transactions }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total Loans</h3>
+            <p class="number">{{ total_loans }}</p>
+        </div>
+    </div>
+
+    <div class="links-section" id="links-section">
+        <h2>Quick Access Links</h2>
+        <div class="links-grid">
+            <a href="{% url 'customer_list' %}" class="link-card">
+                <h3>👥 Customers</h3>
+            </a>
+            <a href="{% url 'account_list' %}" class="link-card">
+                <h3>💳 Accounts</h3>
+            </a>
+            <a href="{% url 'transaction_list' %}" class="link-card">
+                <h3>💸 Transactions</h3>
+            </a>
+            <a href="{% url 'loan_list' %}" class="link-card">
+                <h3>🏠 Loans</h3>
+            </a>
+            <a href="{% url 'card_list' %}" class="link-card">
+                <h3>💳 Cards</h3>
+            </a>
+            <a href="{% url 'branch_list' %}" class="link-card">
+                <h3>🏢 Branches</h3>
+            </a>
+            <a href="{% url 'employee_list' %}" class="link-card">
+                <h3>👔 Employees</h3>
+            </a>
+            <a href="{% url 'customer_report' %}" class="link-card">
+                <h3>📊 Customer Reports</h3>
+            </a>
+            <a href="{% url 'transaction_report' %}" class="link-card">
+                <h3>📈 Transaction Reports</h3>
+            </a>
+            <a href="{% url 'deposit' %}" class="link-card">
+                <h3>💰 Deposit</h3>
+            </a>
+            <a href="{% url 'withdraw' %}" class="link-card">
+                <h3>💸 Withdraw</h3>
+            </a>
+            <a href="{% url 'transfer' %}" class="link-card">
+                <h3>🔄 Transfer</h3>
+            </a>
+            <a href="{% url 'apply_loan' %}" class="link-card">
+                <h3>📝 Apply Loan</h3>
+            </a>
+        </div>
+    </div>
+
+    <div class="recent-transactions">
+        <h2>Recent Transactions</h2>
+        <ul class="transaction-list">
+            {% for transaction in recent_transactions %}
+                <li class="transaction-item">
+                    <strong>{{ transaction.transaction_type }}</strong> - ${{ transaction.amount }} - {{ transaction.timestamp|date:"M d, Y H:i" }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<script>
+    function toggleSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        const button = event.target;
+        if (section.classList.contains('hidden')) {
+            section.classList.remove('hidden');
+            button.classList.add('active');
+            button.textContent = button.textContent.replace('Hide', 'Show');
+        } else {
+            section.classList.add('hidden');
+            button.classList.remove('active');
+            button.textContent = button.textContent.replace('Show', 'Hide');
+        }
+    }
+
+    // Initialize buttons based on visibility
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.toggle-btn');
+        buttons.forEach(button => {
+            const sectionId = button.onclick.toString().match(/'([^']+)'/)[1];
+            const section = document.getElementById(sectionId);
+            if (section.classList.contains('hidden')) {
+                button.classList.remove('active');
+                button.textContent = button.textContent.replace('Show', 'Hide');
+            } else {
+                button.classList.add('active');
+                button.textContent = button.textContent.replace('Hide', 'Show');
+            }
+        });
+    });
+</script>
+{% endblock %}

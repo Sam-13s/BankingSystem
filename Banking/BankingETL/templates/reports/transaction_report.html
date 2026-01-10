@@ -1,0 +1,60 @@
+{% extends 'customers/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Transaction Report</h2>
+    <p>This report shows transaction amounts over the last 30 days, updated in real-time.</p>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Transaction Volume Over Time</h3>
+            <canvas id="transactionChart" width="800" height="400"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let transactionChart;
+
+function updateChart() {
+    fetch('{% url "transaction_chart_data" %}')
+        .then(response => response.json())
+        .then(data => {
+            if (transactionChart) {
+                transactionChart.data.labels = data.labels;
+                transactionChart.data.datasets[0].data = data.data;
+                transactionChart.update();
+            } else {
+                const ctx = document.getElementById('transactionChart').getContext('2d');
+                transactionChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'Total Transaction Amount',
+                            data: data.data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        });
+}
+
+// Initial load
+updateChart();
+
+// Update every 5 seconds
+setInterval(updateChart, 5000);
+</script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'customers/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-3">Employee List</h2>
+    <a href="{% url 'employee_create' %}" class="btn btn-success mb-3">Add Employee</a>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Role</th>
+                <th>Hire Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in employees %}
+            <tr>
+                <td>{{ emp.first_name }} {{ emp.last_name }}</td>
+                <td>{{ emp.email }}</td>
+                <td>{{ emp.phone }}</td>
+                <td>{{ emp.get_role_display }}</td>
+                <td>{{ emp.hire_date }}</td>
+                <td>
+                    <a href="{% url 'employee_update' emp.pk %}" class="btn btn-sm btn-primary">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

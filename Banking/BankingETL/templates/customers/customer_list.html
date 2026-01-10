@@ -1,0 +1,39 @@
+{% extends 'customers/base.html' %}
+{% block content %}
+<h2>Customer List</h2>
+<a href="{% url 'customer_create' %}" class="btn btn-success mb-3">Add New Customer</a>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th><th>Email</th><th>Phone</th><th>Address</th><th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for customer in customers %}
+        <tr>
+            <td>{{ customer.first_name }} {{ customer.last_name }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.phone }}</td>
+            <td>{{ customer.address }}</td>
+            <td>
+                <a href="{% url 'customer_update' customer.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'customer_delete' customer.pk %}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No customers found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="pagination">
+    {% if customers.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ customers.previous_page_number }}">previous</a>
+    {% endif %}
+    <span class="current">Page {{ customers.number }} of {{ customers.paginator.num_pages }}</span>
+    {% if customers.has_next %}
+        <a href="?page={{ customers.next_page_number }}">next</a>
+        <a href="?page={{ customers.paginator.num_pages }}">last &raquo;</a>
+    {% endif %}
+</div>
+{% endblock %}
