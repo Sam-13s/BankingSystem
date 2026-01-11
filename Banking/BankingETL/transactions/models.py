@@ -15,6 +15,7 @@ class Transaction(models.Model):
     from_account = models.ForeignKey(Account, related_name='from_account', on_delete=models.CASCADE, null=True, blank=True)
     to_account = models.ForeignKey(Account, related_name='to_account', on_delete=models.CASCADE, null=True, blank=True)
     description = models.TextField(blank=True, null=True)
+    method = models.CharField(choices=[('ATM', 'ATM'), ('ONLINE', 'Online'), ('BRANCH', 'Branch')], default='ONLINE', max_length=10)
     timestamp = models.DateTimeField(auto_now_add=True)  # Automatically set the field to now when the object is first created.
 
     def __str__(self):
