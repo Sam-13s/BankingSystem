@@ -136,7 +136,6 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{% url 'account_list' %}">📋 Account List</a></li>
-                                <li><a class="dropdown-item" href="{% url 'loan_list' %}">📝 Loans</a></li>
                                 <li><a class="dropdown-item" href="{% url 'card_list' %}">💳 Cards</a></li>
                                 <li><a class="dropdown-item" href="{% url 'customer_report' %}">📊 Reports</a></li>
                             </ul>
@@ -157,8 +156,6 @@
                                 <li><a class="dropdown-item" href="{% url 'withdraw' %}">💸 Withdraw</a></li>
                                 <li><a class="dropdown-item" href="{% url 'transfer' %}">🔄 Transfer</a></li>
                                 <li><a class="dropdown-item" href="{% url 'transaction_list' %}">📜 Transaction History</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'apply_loan' %}">📝 Apply Loan</a></li>
                             </ul>
                         </li>
                         {% block back_button %}

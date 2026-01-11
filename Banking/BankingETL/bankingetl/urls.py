@@ -26,9 +26,8 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')), # Accounts
     path('transactions/', include('transactions.urls')),
     path('branches/', include('branches.urls')),
-    path('cards/', include('cards.urls')), 
+    path('cards/', include('cards.urls')),
     path('employees/', include('employees.urls')),
-    path('loans/', include('loans.urls')),
     path('reports/', include('reports.urls')),  # Reports & ETL Logs
     path('dashboard/', include('dashboard.urls')),
     path('', include('dashboard.urls')),  # Default to dashboard

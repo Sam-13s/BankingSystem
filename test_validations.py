@@ -13,7 +13,6 @@ django.setup()
 from accounts.forms import AccountForm
 from transactions.forms import DepositForm, WithdrawForm, TransferForm
 from customers.forms import CustomerForm
-from loans.forms import LoanForm
 from cards.forms import CardForm
 from accounts.models import Account
 from customers.models import Customer
@@ -87,6 +86,5 @@ if __name__ == '__main__':
     test_account_form()
     test_transaction_forms()
     test_customer_form()
-    test_loan_form()
     test_card_form()
     print("Testing completed.")

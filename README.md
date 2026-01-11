@@ -60,7 +60,6 @@
 - `branches/`: Branch management
 - `cards/`: Card management
 - `employees/`: Employee management
-- `loans/`: Loan management
 - `reports/`: Reports and ETL logs
 - `dashboard/`: Main dashboard
 - `templates/`: HTML templates
@@ -73,7 +72,6 @@
 - Transaction processing
 - Branch and employee management
 - Card services
-- Loan management
 - Reporting and ETL operations
 - Dashboard for overview
 

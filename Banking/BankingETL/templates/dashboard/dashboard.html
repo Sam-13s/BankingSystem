@@ -199,10 +199,6 @@
             <h3>Total Transactions</h3>
             <p class="number">{{ total_transactions }}</p>
         </div>
-        <div class="stat-card">
-            <h3>Total Loans</h3>
-            <p class="number">{{ total_loans }}</p>
-        </div>
     </div>
 
     <div class="links-section" id="links-section">
@@ -216,9 +212,6 @@
             </a>
             <a href="{% url 'transaction_list' %}" class="link-card">
                 <h3>💸 Transactions</h3>
-            </a>
-            <a href="{% url 'loan_list' %}" class="link-card">
-                <h3>🏠 Loans</h3>
             </a>
             <a href="{% url 'card_list' %}" class="link-card">
                 <h3>💳 Cards</h3>
@@ -243,9 +236,6 @@
             </a>
             <a href="{% url 'transfer' %}" class="link-card">
                 <h3>🔄 Transfer</h3>
-            </a>
-            <a href="{% url 'apply_loan' %}" class="link-card">
-                <h3>📝 Apply Loan</h3>
             </a>
         </div>
     </div>
