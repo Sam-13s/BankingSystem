@@ -271,14 +271,14 @@
     document.addEventListener('DOMContentLoaded', function() {
         const buttons = document.querySelectorAll('.toggle-btn');
         buttons.forEach(button => {
-            const sectionId = button.onclick.toString().match(/'([^']+)'/)[1];
+            const sectionId = button.getAttribute('onclick').match(/'([^']+)'/)[1];
             const section = document.getElementById(sectionId);
             if (section.classList.contains('hidden')) {
                 button.classList.remove('active');
-                button.textContent = button.textContent.replace('Show', 'Hide');
+                button.textContent = button.textContent.replace('Hide', 'Show');
             } else {
                 button.classList.add('active');
-                button.textContent = button.textContent.replace('Hide', 'Show');
+                button.textContent = button.textContent.replace('Show', 'Hide');
             }
         });
     });

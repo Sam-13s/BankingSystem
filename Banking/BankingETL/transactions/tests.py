@@ -68,7 +68,7 @@ class TransactionViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
         self.account1.refresh_from_db()
         self.assertEqual(self.account1.balance, 900.00)
-        self.assertTrue(Transaction.objects.filter(from_account=self.account1, transaction_type='WITHDRAWAL', amount=100.00).exists())
+        self.assertTrue(Transaction.objects.filter(from_account=self.account1, transaction_type='WITHDRAW', amount=100.00).exists())
 
     def test_withdraw_view_insufficient_balance(self):
         data = {
@@ -95,8 +95,7 @@ class TransactionViewsTestCase(TestCase):
         self.account2.refresh_from_db()
         self.assertEqual(self.account1.balance, 700.00)
         self.assertEqual(self.account2.balance, 800.00)
-        self.assertTrue(Transaction.objects.filter(from_account=self.account1, to_account=self.account2, transaction_type='TRANSFER', amount=-300.00).exists())
-        self.assertTrue(Transaction.objects.filter(from_account=self.account2, to_account=self.account1, transaction_type='TRANSFER', amount=300.00).exists())
+        self.assertTrue(Transaction.objects.filter(from_account=self.account1, to_account=self.account2, transaction_type='TRANSFER', amount=300.00).exists())
 
     def test_transfer_view_same_account(self):
         data = {

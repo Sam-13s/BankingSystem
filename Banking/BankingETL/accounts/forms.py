@@ -15,7 +15,10 @@ class AccountForm(forms.ModelForm):
 
     def clean_account_number(self):
         account_number = self.cleaned_data.get('account_number')
-        if Account.objects.filter(account_number=account_number).exists():
+        qs = Account.objects.filter(account_number=account_number)
+        if self.instance:
+            qs = qs.exclude(pk=self.instance.pk)
+        if qs.exists():
             raise ValidationError("Account number must be unique.")
         return account_number
 

@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from django.shortcuts import redirect
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +30,6 @@ urlpatterns = [
     path('cards/', include('cards.urls')),
     path('employees/', include('employees.urls')),
     path('reports/', include('reports.urls')),  # Reports & ETL Logs
-    path('dashboard/', include('dashboard.urls')),
-    path('', include('dashboard.urls')),  # Default to dashboard
+    path('dashboard/', include('dashboard.urls')),  # Dashboard
+    path('', lambda request: redirect('dashboard')),  # Redirect root to dashboard
 ]

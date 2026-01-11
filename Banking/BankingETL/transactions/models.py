@@ -5,9 +5,9 @@ from accounts.models import Account  # Import Account model
 
 class Transaction(models.Model):
     TRANSACTION_TYPES = (
-        ('deposit', 'Deposit'),
-        ('withdraw', 'Withdraw'),
-        ('transfer', 'Transfer'),
+        ('DEPOSIT', 'Deposit'),
+        ('WITHDRAW', 'Withdraw'),
+        ('TRANSFER', 'Transfer'),
     )
 
     transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES)

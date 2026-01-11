@@ -13,7 +13,7 @@ def deposit_view(request):
             description = form.cleaned_data.get('description', '')
             account.balance += amount
             account.save()
-            Transaction.objects.create(from_account=None, to_account=account, transaction_type='deposit', amount=amount, description=description)
+            Transaction.objects.create(from_account=None, to_account=account, transaction_type='DEPOSIT', amount=amount, description=description)
             messages.success(request, 'Deposit successful.')
             return redirect('deposit')
     else:
@@ -30,7 +30,7 @@ def withdraw_view(request):
             if account.balance >= amount:
                 account.balance -= amount
                 account.save()
-                Transaction.objects.create(from_account=account, to_account=None, transaction_type='withdraw', amount=amount, description=description)
+                Transaction.objects.create(from_account=account, to_account=None, transaction_type='WITHDRAW', amount=amount, description=description)
                 messages.success(request, 'Withdrawal successful.')
                 return redirect('withdraw')
             else:
@@ -52,7 +52,7 @@ def transfer_view(request):
                 to_account.balance += amount
                 from_account.save()
                 to_account.save()
-                Transaction.objects.create(from_account=from_account, to_account=to_account, transaction_type='transfer', amount=amount, description=description)
+                Transaction.objects.create(from_account=from_account, to_account=to_account, transaction_type='TRANSFER', amount=amount, description=description)
                 messages.success(request, 'Transfer successful.')
                 return redirect('transfer')
             else:

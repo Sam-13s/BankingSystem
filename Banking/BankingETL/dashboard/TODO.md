@@ -1,0 +1,5 @@
+- [ ] Remove 'dashboard' from INSTALLED_APPS in settings.py
+- [ ] Remove dashboard URL include and change root redirect in urls.py
+- [ ] Update navbar brand link in base.html to point to customer_list
+- [ ] Delete the entire dashboard/ directory
+- [ ] Delete dashboard-specific CSS file at static/css/dashboard.css

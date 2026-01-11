@@ -68,6 +68,16 @@
                             {% endif %}
                         </div>
 
+                        <div class="mb-3">
+                            <label for="{{ form.branch.id_for_label }}" class="form-label">🏢 Branch</label>
+                            {{ form.branch }}
+                            {% if form.branch.errors %}
+                                <div class="text-danger small">
+                                    {{ form.branch.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
                         <div class="d-flex justify-content-between">
                             <button type="submit" class="btn btn-primary">💾 Save Customer</button>
                             <a href="{% url 'customer_list' %}" class="btn btn-secondary">❌ Cancel</a>
